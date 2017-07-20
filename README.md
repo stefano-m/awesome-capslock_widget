@@ -19,7 +19,12 @@ repository).
 For **Awesome 4.x**, add the following to your `~/.config/awesome/rc.lua`:
 
 ``` lua
+-- If you just copied the file in ~/.config/awesome
 local capslock = require("capslock")
+
+-- If you cloned the repo as a submodule in
+-- ~/.config/awesome/external/capslock
+-- local capslock = require("external.capslock.capslock")
 
 -- more config here
 
