@@ -9,8 +9,8 @@ widget to work)
 # Installation
 
 1. Ensure that `xset` is available to you on your system.
-2. Copy `capslock.lua` in your `~/.config/awesome/rc.lua` (e.g. by cloning this
-repository).
+2. Copy `capslock.lua` in your `~/.config/awesome/ folder` (e.g. by cloning this
+   repository).
 3. Restart Awesome (e.g. press `modkey + Control` or run `awesome-client
    "awesome.restart()"` from a terminal).
 
