@@ -42,8 +42,31 @@ local globalkeys = awful.util.table.join(
 -- more config follows
 ```
 
-Now, when you activate CAPS LOCK, a chevron sign will be
-displayed: ![capslock screenshot](/screenshots/capslock_widget.png?raw=true)
+Now, when CAPS LOCK is active, an uppercase letter **A** will be displayed
+
+![active_capslock screenshot](/screenshots/active_capslock_widget.png?raw=true)
+
+when CAPS LOCK is inactive, a lowecase letter **a** will be displayed:
+
+![inactive_capslock screenshot](/screenshots/inactive_capslock_widget.png?raw=true)
+
+These can be changed by changing the `activated` and `deactivated`
+attributes of the widget
+as
+[Pango markup](https://developer.gnome.org/pango/stable/PangoMarkupFormat.html)
+strings. You will probably need to adjust the `forced_width` attribute too.
+
+For example:
+
+``` lua
+local capslock = require("capslock")
+capslock.forced_width = 35
+capslock.activated = "<u>CAPS</u>"
+capslock.deactivated = "<u>caps</u>"
+```
+
+When the mouse is over the widget, a tooltip that says `Caps Lock on`/`Caps
+Lock off` is also shown.
 
 # Contributing
 

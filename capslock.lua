@@ -39,34 +39,35 @@
 
 ]]
 
-local math = math
 local awful = require("awful")
-local gears = require("gears")
 local wibox = require("wibox")
 
-local checkbox = wibox.widget {
-  checked = false,
-  border_width = 0,
-  paddings = 2,
-  check_shape = function (cr, w, h)
-    gears.shape.transform(gears.shape.powerline)
-      :rotate(-math.pi/2)
-      :translate(-h, 0)(cr, w, h)
-  end,
-  widget = wibox.widget.checkbox
+local capslock = wibox.widget {
+  widget = wibox.widget.textbox,
+  align = "center",
+  valign = "center",
+  forced_width = 15,
 }
 
-local function check_caps_lock()
+capslock.activated = "<b>A</b>"
+capslock.deactivated = "<b>a</b>"
+
+local tooltip = awful.tooltip({})
+
+tooltip:add_to_object(capslock)
+
+function capslock:check()
   awful.spawn.with_line_callback(
     "bash -c 'sleep 0.2 && xset q'",
     {
       stdout = function (line)
         if line:match("Caps Lock") then
           local status = line:gsub(".*(Caps Lock:%s+)(%a+).*", "%2")
+          tooltip.text = "Caps Lock " .. status
           if status == "on" then
-            checkbox.checked = true
+            self.markup = self.activated
           else
-            checkbox.checked = false
+            self.markup = self.deactivated
           end
         end
       end
@@ -74,9 +75,11 @@ local function check_caps_lock()
   )
 end
 
-local capslock = awful.key({}, "Caps_Lock", check_caps_lock)
-checkbox.key = capslock
+capslock.key = awful.key(
+  {},
+  "Caps_Lock",
+  function () capslock:check() end)
 
-check_caps_lock()
+capslock:check()
 
-return checkbox
+return capslock
